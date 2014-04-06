@@ -11,7 +11,7 @@
 
 #define K(k) { KEY_ ## k, 0, 0, KEY_BACKSPACE, 0 }
 #define ShK(k) {KEY_ ## k, KEY_SHIFT, 0, KEY_BACKSPACE, 0}
-#define CtK(k) {KEY_ ## k, KEY_SHIFT, 0, KEY_BACKSPACE, 0}
+#define CtK(k) {KEY_ ## k, KEY_CTRL, 0, KEY_BACKSPACE, 0}
 
 #define PK(k) { KEY_ ## k, 0, MAPPING_FLAG_PASSIVE, 0, 0 }
 #define MK(k) { 0, KEY_ ## k, MAPPING_FLAG_MOD_ONLY, 0, 0 }
@@ -22,7 +22,7 @@ const static Mapping keyMappings[16][40] PROGMEM = {
 	{ },		{ },		K(ESC),		K(TAB),		{ },			{ },		{ },		K(BACKSPACE),{ },		{ },
 	K(Q),		K(W),		K(E),		K(R),		K(T),			K(Y),		K(U),		K(I),		K(O),		K(P),
 	K(A),		K(S),		K(D),		K(F),		K(G),			K(H),		K(J),		K(K),		K(L),		K(SEMICOLON),
-	K(Z),		K(X),		K(C),		K(V),		K(B),			K(N),		K(M),		{ },		K(SPACE),	{ },
+	K(Z),		K(X),		K(C),		K(V),		K(B),			K(N),		K(M),		{ },		K(SPACE),	K(ENTER),
 },
 
 /* L1 (symbols) */
@@ -35,10 +35,10 @@ const static Mapping keyMappings[16][40] PROGMEM = {
 
 /* L2 (numbers, symbols) */
 {
-	{ },		{ },		{ },		{ },		{ },			K(7),		K(8),		K(9),		{ },		{ },
-	{ },		{ },		{ },		{ },		{ },			K(4),		K(5),		K(6),		{ },		{ },
-	{ },		{ },		{ },		{ },		{ },			K(1),		K(2),		K(3),		{ },		{ },
-	{ },		{ },		{ },		{ },		{ },			K(0),		K(COMMA),	K(PERIOD),	K(SPACE),	{ },
+	{ },		{ },		{ },		{ },		{ },			{ },		{ },		K(BACKSPACE),{ },		{ },
+	{ },		{ },		{ },		{ },		{ },			{ },		K(7),		K(8),		K(9),		{ },
+	{ },		{ },		{ },		{ },		{ },			K(PERIOD),	K(4),		K(5),		K(6),		{ },
+	{ },		{ },		{ },		{ },		{ },			K(0),		K(1),		K(2),		K(3),		{ },
 },
 
 /* L3 */
@@ -53,7 +53,12 @@ const static Mapping keyMappings[16][40] PROGMEM = {
 },
 
 /* L1+R1 (commands) */
-{ },
+{
+	CtK(Q),		{ },		{ },		{ },		{ },			{ },		{ },		{ },		{ },		{ },
+	{ },		CtK(S),		{ },		CtK(F),		{ },			{ },		{ },		{ },		{ },		{ },
+	{ },		{ },		{ },		{ },		{ },			{ },		{ },		{ },		{ },		{ },
+	CtK(Z),		CtK(X),		CtK(C),		CtK(V),		{ },			{ },		{ },		{ },		{ },		{ },
+},
 
 /* L2+R1 */
 { },
@@ -70,7 +75,9 @@ const static Mapping keyMappings[16][40] PROGMEM = {
 },
 
 /* L1+R2 */
-{ },
+{
+
+},
 
 /* L2+R2 (commands) */
 { },
