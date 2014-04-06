@@ -24,5 +24,6 @@ int main(void)
     {
 		checkReset();
 		scanMatrix();
+		tickKbd();
     }
 }

@@ -19,10 +19,10 @@
 
 typedef struct Mapping_t {
 	uint8_t key;
-	uint8_t modifiers : 4;
-	uint8_t flags : 4;
+	uint8_t modifiers;
+	uint8_t flags;
 	uint8_t undoKey;
-	uint8_t undoModifiers : 4;
+	uint8_t undoModifiers;
 } Mapping;
 
 #define NUM_SHIFT_INDICES 16

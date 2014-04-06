@@ -13,10 +13,10 @@
 #define ShK(k) {KEY_ ## k, KEY_SHIFT, 0, KEY_BACKSPACE, 0}
 #define CtK(k) {KEY_ ## k, KEY_SHIFT, 0, KEY_BACKSPACE, 0}
 
-#define PK(k) { KEY_ ## k, MAPPING_FLAG_PASSIVE, 0, 0, 0 }
-#define MK(k) { 0, MAPPING_FLAG_MOD_ONLY, KEY_ ## k, 0, 0 }
+#define PK(k) { KEY_ ## k, 0, MAPPING_FLAG_PASSIVE, 0, 0 }
+#define MK(k) { 0, KEY_ ## k, MAPPING_FLAG_MOD_ONLY, 0, 0 }
 
-const static Mapping keyMappings[16][80] PROGMEM = {
+const static Mapping keyMappings[16][40] PROGMEM = {
 /* Unshifted */
 {
 	{ },		{ },		K(ESC),		K(TAB),		{ },			{ },		{ },		K(BACKSPACE),{ },		{ },
@@ -64,9 +64,9 @@ const static Mapping keyMappings[16][80] PROGMEM = {
 /* R2 (navigation) */
 {
 	{ },		{ },		{ },		{ },		{ },			{ },		{ },		{ },		{ },		{ },
-	{ },		{ },		{ },		{ },		{ },			PK(HOME),	PK(UP),		PK(PAGE_UP),{ },		{ },
-	MK(SHIFT),	MK(CTRL),	MK(ALT),	{ },		{ },			PK(LEFT),	PK(DOWN),	PK(RIGHT),	{ },		{ },
-	{ },		{ },		{ },		{ },		{ },			PK(END),	{ },		PK(PAGE_DOWN),{ },		{ },
+	{ },		{ },		{ },		{ },		{ },			{ },		PK(HOME),	PK(UP),		PK(PAGE_UP),{ },
+	MK(SHIFT),	MK(CTRL),	MK(ALT),	{ },		{ },			{ },		PK(LEFT),	PK(DOWN),	PK(RIGHT),	{ },
+	{ },		{ },		{ },		{ },		{ },			{ },		PK(END),	{ },		PK(PAGE_DOWN),{ },
 },
 
 /* L1+R2 */

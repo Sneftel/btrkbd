@@ -12,6 +12,7 @@
 #include <avr/io.h>
 
 void initKbd();
+void tickKbd();
 
 void reportKeyDown(uint8_t keyIdx);
 void reportKeyUp(uint8_t keyIdx);
