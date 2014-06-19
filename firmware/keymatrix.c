@@ -183,3 +183,27 @@ uint8_t getCurShiftMask()
 	
 	return getShiftIdxForShiftKeys(l1, l2, l3, r1, r2, r3);
 }
+
+void getShiftKeyMaskFromShiftIdx(uint8_t shiftIdx, uint8_t shiftKeyMaskOut[6])
+{
+	for(uint8_t i=0; i<6; i++)
+	{
+		shiftKeyMaskOut[i] = 0;
+	}
+	
+	{
+		uint8_t leftShift = shiftIdx & 0x3;
+		if(leftShift != 0)
+		{
+			shiftKeyMaskOut[leftShift-1] = 1;
+		}
+	}
+	
+	{
+		uint8_t rightShift = shiftIdx >> 2;
+		if(rightShift != 0)
+		{
+			shiftKeyMaskOut[3 + rightShift-1] = 1;
+		}
+	}
+}

@@ -25,6 +25,8 @@ uint8_t getShiftIdxForShiftKeys(char l1, char l2, char l3, char r1, char r2, cha
 
 uint8_t getCurShiftMask();
 
+void getShiftKeyMaskFromShiftIdx(uint8_t shiftIdx, uint8_t shiftKeyMaskOut[6]);
+
 #define calcKeyIdx(row, col) ((row)*NUM_COLS + (col))
 
 #endif /* KEYMATRIX_H_ */
