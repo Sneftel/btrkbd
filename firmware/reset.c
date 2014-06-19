@@ -10,15 +10,15 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-const char RESET_KEYS[] = {
+static const char RESET_KEYS[] = {
 	calcKeyIdx(0,2), calcKeyIdx(0,4), calcKeyIdx(0,5), calcKeyIdx(0,7)
 };
 
-const char INHIBIT_KEYS[] = {
+static const char INHIBIT_KEYS[] = {
 	calcKeyIdx(0,3), calcKeyIdx(0,6)
 };
 
-char shouldReset()
+static char shouldReset()
 {
 	char NUM_RESET_KEYS = sizeof(RESET_KEYS)/sizeof(*RESET_KEYS);
 	char NUM_INHIBIT_KEYS = sizeof(INHIBIT_KEYS)/sizeof(*INHIBIT_KEYS);
@@ -41,7 +41,7 @@ char shouldReset()
 	return 1;
 }
 
-void doReset()
+static void doReset()
 {
 	cli();
 // disable watchdog, if enabled
