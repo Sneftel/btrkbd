@@ -19,4 +19,6 @@ void reportKeyUp(uint8_t keyIdx);
 
 char isKeyDown(uint8_t keyIdx);
 
+void setTrainerMode();
+
 #endif /* KBD_H_ */

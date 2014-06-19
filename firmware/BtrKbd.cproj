@@ -136,6 +136,12 @@
     <Compile Include="reset.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="trainer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="trainer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="usb_keyboard_debug.c">
       <SubType>compile</SubType>
     </Compile>

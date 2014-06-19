@@ -30,6 +30,7 @@ static int8_t slotKeys[6];
 
 static uint8_t curShiftIdx = 0;
 
+static int8_t trainerMode = 0;
 
 static void flushState()
 {
@@ -108,11 +109,94 @@ static int8_t findSlotMatchingKey(uint8_t keycode)
 	return -1;		
 }
 
+static void reportKeyToTrainer(uint8_t keyIdx, uint8_t shiftIdx)
+{
+	uint8_t shiftKeyMask[6];
+	getShiftKeyMaskFromShiftIdx(shiftIdx, shiftKeyMask);
+	if(shiftKeyMask[0])
+	{
+		usb_keyboard_press(KEY_L, KEY_SHIFT); usb_keyboard_press(KEY_1, 0); usb_keyboard_press(KEYPAD_PLUS, 0);
+	}
+	if(shiftKeyMask[1])
+	{
+		usb_keyboard_press(KEY_L, KEY_SHIFT); usb_keyboard_press(KEY_2, 0); usb_keyboard_press(KEYPAD_PLUS, 0);
+	}
+	if(shiftKeyMask[2])
+	{
+		usb_keyboard_press(KEY_L, KEY_SHIFT); usb_keyboard_press(KEY_3, 0); usb_keyboard_press(KEYPAD_PLUS, 0);
+	}
+	if(shiftKeyMask[3])
+	{
+		usb_keyboard_press(KEY_R, KEY_SHIFT); usb_keyboard_press(KEY_1, 0); usb_keyboard_press(KEYPAD_PLUS, 0);
+	}
+	if(shiftKeyMask[4])
+	{
+		usb_keyboard_press(KEY_R, KEY_SHIFT); usb_keyboard_press(KEY_2, 0); usb_keyboard_press(KEYPAD_PLUS, 0);
+	}
+	if(shiftKeyMask[5])
+	{
+		usb_keyboard_press(KEY_R, KEY_SHIFT); usb_keyboard_press(KEY_3, 0); usb_keyboard_press(KEYPAD_PLUS, 0);
+	}
+	switch(keyIdx)
+	{
+		case calcKeyIdx(0, 2): usb_keyboard_press(KEY_3, 0); break;
+		case calcKeyIdx(0, 3): usb_keyboard_press(KEY_4, 0); break;
+		case calcKeyIdx(0, 4): usb_keyboard_press(KEY_5, 0); break;
+		case calcKeyIdx(0, 5): usb_keyboard_press(KEY_6, 0); break;
+		case calcKeyIdx(0, 6): usb_keyboard_press(KEY_7, 0); break;
+		case calcKeyIdx(0, 7): usb_keyboard_press(KEY_8, 0); break;
+		
+		case calcKeyIdx(1, 0): usb_keyboard_press(KEY_Q, KEY_SHIFT); break;
+		case calcKeyIdx(1, 1): usb_keyboard_press(KEY_W, KEY_SHIFT); break;
+		case calcKeyIdx(1, 2): usb_keyboard_press(KEY_E, KEY_SHIFT); break;
+		case calcKeyIdx(1, 3): usb_keyboard_press(KEY_R, KEY_SHIFT); break;
+		case calcKeyIdx(1, 4): usb_keyboard_press(KEY_T, KEY_SHIFT); break;
+		case calcKeyIdx(1, 5): usb_keyboard_press(KEY_Y, KEY_SHIFT); break;
+		case calcKeyIdx(1, 6): usb_keyboard_press(KEY_U, KEY_SHIFT); break;
+		case calcKeyIdx(1, 7): usb_keyboard_press(KEY_I, KEY_SHIFT); break;
+		case calcKeyIdx(1, 8): usb_keyboard_press(KEY_O, KEY_SHIFT); break;
+		case calcKeyIdx(1, 9): usb_keyboard_press(KEY_P, KEY_SHIFT); break;
+
+		case calcKeyIdx(2, 0): usb_keyboard_press(KEY_A, KEY_SHIFT); break;
+		case calcKeyIdx(2, 1): usb_keyboard_press(KEY_S, KEY_SHIFT); break;
+		case calcKeyIdx(2, 2): usb_keyboard_press(KEY_D, KEY_SHIFT); break;
+		case calcKeyIdx(2, 3): usb_keyboard_press(KEY_F, KEY_SHIFT); break;
+		case calcKeyIdx(2, 4): usb_keyboard_press(KEY_G, KEY_SHIFT); break;
+		case calcKeyIdx(2, 5): usb_keyboard_press(KEY_H, KEY_SHIFT); break;
+		case calcKeyIdx(2, 6): usb_keyboard_press(KEY_J, KEY_SHIFT); break;
+		case calcKeyIdx(2, 7): usb_keyboard_press(KEY_K, KEY_SHIFT); break;
+		case calcKeyIdx(2, 8): usb_keyboard_press(KEY_L, KEY_SHIFT); break;
+		case calcKeyIdx(2, 9): usb_keyboard_press(KEY_SEMICOLON, 0); break;
+
+		case calcKeyIdx(3, 0): usb_keyboard_press(KEY_Z, KEY_SHIFT); break;
+		case calcKeyIdx(3, 1): usb_keyboard_press(KEY_X, KEY_SHIFT); break;
+		case calcKeyIdx(3, 2): usb_keyboard_press(KEY_C, KEY_SHIFT); break;
+		case calcKeyIdx(3, 3): usb_keyboard_press(KEY_V, KEY_SHIFT); break;
+		case calcKeyIdx(3, 4): usb_keyboard_press(KEY_B, KEY_SHIFT); break;
+		case calcKeyIdx(3, 5): usb_keyboard_press(KEY_N, KEY_SHIFT); break;
+		case calcKeyIdx(3, 6): usb_keyboard_press(KEY_M, KEY_SHIFT); break;
+		case calcKeyIdx(3, 7): usb_keyboard_press(KEY_COMMA, 0); break;
+		case calcKeyIdx(3, 8): usb_keyboard_press(KEY_PERIOD, 0); break;
+		case calcKeyIdx(3, 9): usb_keyboard_press(KEY_SLASH, 0); break;
+		
+		default: usb_keyboard_press(KEY_SLASH, KEY_SHIFT); break;
+	}
+	
+	usb_keyboard_press(KEY_ENTER, 0); 
+}
+
 void pressKey(uint8_t keyIdx)
 {
 	Mapping mapping;
-
+	
 	print("pressKey: key "); phex(keyIdx); print(", shift "); phex(curShiftIdx); print(".\n");
+	
+	if(trainerMode)
+	{
+		print("in trainer mode.\n");
+		reportKeyToTrainer(keyIdx, curShiftIdx);
+		return;
+	}
 	
 	if(!hasMapping(curShiftIdx, keyIdx))
 	{
@@ -171,6 +255,11 @@ static uint8_t anyKeysPressed()
 
 void releaseKey(uint8_t keyIdx)
 {
+	if(trainerMode)
+	{
+		return;
+	}
+	
 	uint8_t slot = keySlots[keyIdx];
 	if(slot == -1)
 	{
@@ -248,4 +337,14 @@ void reportKeyUp(uint8_t keyIdx)
 char isKeyDown(uint8_t keyIdx)
 {
 	return state[keyIdx] == STATE_DOWN;
+}
+
+void setTrainerMode()
+{
+	if(trainerMode == 0)
+	{
+		print("Entering trainer mode.\n");
+		trainerMode = 1;
+		flushState();
+	}
 }
