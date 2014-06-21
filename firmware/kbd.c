@@ -111,6 +111,18 @@ static int8_t findSlotMatchingKey(uint8_t keycode)
 
 static void reportKeyToTrainer(uint8_t keyIdx, uint8_t shiftIdx)
 {
+	if(shiftIdx == 15)
+	{
+		switch(keyIdx)
+		{
+			case 35: usb_keyboard_press(KEY_1, 0); break;
+			case 36: usb_keyboard_press(KEY_2, 0); break;
+			case 37: usb_keyboard_press(KEY_3, 0); break;
+		}
+		
+		return;
+	}
+	
 	uint8_t shiftKeyMask[6];
 	getShiftKeyMaskFromShiftIdx(shiftIdx, shiftKeyMask);
 	if(shiftKeyMask[0])
@@ -166,7 +178,17 @@ static void reportKeyToTrainer(uint8_t keyIdx, uint8_t shiftIdx)
 		case calcKeyIdx(2, 6): usb_keyboard_press(KEY_J, KEY_SHIFT); break;
 		case calcKeyIdx(2, 7): usb_keyboard_press(KEY_K, KEY_SHIFT); break;
 		case calcKeyIdx(2, 8): usb_keyboard_press(KEY_L, KEY_SHIFT); break;
-		case calcKeyIdx(2, 9): usb_keyboard_press(KEY_SEMICOLON, 0); break;
+		case calcKeyIdx(2, 9): 
+			usb_keyboard_press(KEY_S, KEY_SHIFT); 
+			usb_keyboard_press(KEY_E, KEY_SHIFT);
+			usb_keyboard_press(KEY_M, KEY_SHIFT);
+			usb_keyboard_press(KEY_I, KEY_SHIFT);
+			usb_keyboard_press(KEY_C, KEY_SHIFT);
+			usb_keyboard_press(KEY_O, KEY_SHIFT);
+			usb_keyboard_press(KEY_L, KEY_SHIFT);
+			usb_keyboard_press(KEY_O, KEY_SHIFT);
+			usb_keyboard_press(KEY_N, KEY_SHIFT);
+			break;
 
 		case calcKeyIdx(3, 0): usb_keyboard_press(KEY_Z, KEY_SHIFT); break;
 		case calcKeyIdx(3, 1): usb_keyboard_press(KEY_X, KEY_SHIFT); break;
@@ -175,10 +197,29 @@ static void reportKeyToTrainer(uint8_t keyIdx, uint8_t shiftIdx)
 		case calcKeyIdx(3, 4): usb_keyboard_press(KEY_B, KEY_SHIFT); break;
 		case calcKeyIdx(3, 5): usb_keyboard_press(KEY_N, KEY_SHIFT); break;
 		case calcKeyIdx(3, 6): usb_keyboard_press(KEY_M, KEY_SHIFT); break;
-		case calcKeyIdx(3, 7): usb_keyboard_press(KEY_COMMA, 0); break;
-		case calcKeyIdx(3, 8): usb_keyboard_press(KEY_PERIOD, 0); break;
-		case calcKeyIdx(3, 9): usb_keyboard_press(KEY_SLASH, 0); break;
-		
+		case calcKeyIdx(3, 7): 
+			usb_keyboard_press(KEY_C, KEY_SHIFT); 
+			usb_keyboard_press(KEY_O, KEY_SHIFT);
+			usb_keyboard_press(KEY_M, KEY_SHIFT);
+			usb_keyboard_press(KEY_M, KEY_SHIFT);
+			usb_keyboard_press(KEY_A, KEY_SHIFT);
+			break;
+		case calcKeyIdx(3, 8): 
+			usb_keyboard_press(KEY_P, KEY_SHIFT); 
+			usb_keyboard_press(KEY_E, KEY_SHIFT);
+			usb_keyboard_press(KEY_R, KEY_SHIFT);
+			usb_keyboard_press(KEY_I, KEY_SHIFT);
+			usb_keyboard_press(KEY_O, KEY_SHIFT);
+			usb_keyboard_press(KEY_D, KEY_SHIFT);
+			break;
+		case calcKeyIdx(3, 9): 
+			usb_keyboard_press(KEY_S, KEY_SHIFT);
+			usb_keyboard_press(KEY_L, KEY_SHIFT);
+			usb_keyboard_press(KEY_A, KEY_SHIFT);
+			usb_keyboard_press(KEY_S, KEY_SHIFT);
+			usb_keyboard_press(KEY_H, KEY_SHIFT);
+			break;
+	
 		default: usb_keyboard_press(KEY_SLASH, KEY_SHIFT); break;
 	}
 	
