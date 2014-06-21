@@ -11,11 +11,16 @@ MAPPINGS = dict(read_csv_lines(open('mappings.csv')))
 BUTTON_NAMES = dict()
 for name,row,col in read_csv_lines(open('button_names.csv')):
 	BUTTON_NAMES[(int(row),int(col))] = name
+MNEMONICS = dict(read_csv_lines(open('mnemonics.csv')))
+
+def get_key_sequence(key_sequence_or_mnemonic):
+	return MNEMONICS.get(key_sequence_or_mnemonic, key_sequence_or_mnemonic)
 
 def make_mapping_struct(mapping):
 	if not mapping:
 		return "{ }"
-	tokenized = mapping.split("+")
+	key_sequence = get_key_sequence(mapping)
+	tokenized = key_sequence.split("+")
 	if len(tokenized) > 1:
 		modifiers_string = ""
 		for modifier in tokenized[:-1]:

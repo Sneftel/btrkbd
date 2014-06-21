@@ -224,7 +224,7 @@ const static Mapping keyMappings[16][40] PROGMEM = {
 		{ },
 		{ },
 		{ },
-		{KEY_T, KEY_CTRL, 0, KEY_BACKSPACE, 0 },
+		{ },
 		{ },
 		{ },
 		{ },
