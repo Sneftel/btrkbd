@@ -118,6 +118,7 @@ static void reportKeyToTrainer(uint8_t keyIdx, uint8_t shiftIdx)
 			case 35: usb_keyboard_press(KEY_1, 0); break;
 			case 36: usb_keyboard_press(KEY_2, 0); break;
 			case 37: usb_keyboard_press(KEY_3, 0); break;
+			case 38: usb_keyboard_press(KEY_4, 0); break;
 		}
 		
 		return;
